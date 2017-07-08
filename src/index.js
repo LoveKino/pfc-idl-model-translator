@@ -69,5 +69,6 @@ let modelEqualsCode = (funName, params, target) => {
 };
 
 module.exports = {
-    translator
+    translator,
+    translateModelIDL
 };
