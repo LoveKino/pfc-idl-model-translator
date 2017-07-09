@@ -34,4 +34,9 @@ describe('library', () => {
         let code = translator(parse('Pair(v1, v2) -> Model\nM1(a, b) -> Model'));
         assert.deepEqual(eval(`${code}\nvar p = new Pair(new Pair(1, 2), new Pair(3, new M1(4, 5))); let ret = getAllLeafs(p, {branchClasses: ['Pair']});ret[3] = getAllLeafs(ret[3]);ret`), [1, 2, 3, [4, 5]]);
     });
+
+    it('getAllLeafs:ignoreClasses', () => {
+        let code = translator(parse('Pair(v1, v2) -> Model\nM1(a, b) -> Model'));
+        assert.deepEqual(eval(`${code}\nvar p = new Pair(new Pair(1, 2), new Pair(3, new M1(4, 5))); getAllLeafs(p, {ignoreClasses: ['M1']});`), [1, 2, 3]);
+    });
 });
