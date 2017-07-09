@@ -62,7 +62,7 @@ ${funName}.prototype.params = function() {
     return this._params;
 };
 ${funName}.prototype.instanceModel = true;
-${funName}.prototype.className = "${funName}";
+${funName}.prototype.className = '${funName}';
 `;
 };
 
