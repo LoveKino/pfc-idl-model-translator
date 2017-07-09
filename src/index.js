@@ -33,7 +33,8 @@ let translateModelIDL = (funName, params, target) => {
     return modelConstructor(funName, params, target) +
         modelGetsCode(funName, params, target) +
         modelSetsCode(funName, params, target) +
-        modelEqualsCode(funName, params, target);
+        modelEqualsCode(funName, params, target) +
+        modelMetaCode(funName, params, target);
 };
 
 let modelConstructor = (funName, params, target) => {
@@ -63,6 +64,14 @@ let modelSetsCode = (funName, params, target) => {
 let modelEqualsCode = (funName, params, target) => {
     if (target === 'js') {
         return jsTarget.modelEqualsCode(funName, params);
+    }
+
+    return '';
+};
+
+let modelMetaCode = (funName, params, target) => {
+    if (target === 'js') {
+        return jsTarget.modelMetaCode(funName, params);
     }
 
     return '';

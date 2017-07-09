@@ -32,7 +32,28 @@ describe('index', () => {
     it('nest', () => {
         let code = translator(parse('M1(a, b, c) -> Model\nM2(e, M1 f) -> Model'));
 
-        assert.equal(eval(`${code}\nvar m1 = new M1(1, 2, 3);\nvar m2 = new M2(1, m1);m2.f.a`), 1);
-        assert.equal(eval(`${code}\nvar m1 = new M1(1, 2, 3);\nvar m2 = new M2(1, m1);m2.f.b`), 2);
+        assert.equal(eval(`${code}\nvar m1 = new M1(1, 2, 3);\nvar m2 = new M2(1, m1);m2.getF().getA()`), 1);
+        assert.equal(eval(`${code}\nvar m1 = new M1(1, 2, 3);\nvar m2 = new M2(1, m1);m2.getF().getB()`), 2);
+    });
+
+    it('params', () => {
+        let code = translator(parse('M1(a, b, c) -> Model'));
+
+        // params
+        assert.deepEqual(eval(`${code}\nvar m1 = new M1(1, 2, 3);\nm1.setA(10)\nm1.params();`), [10, 2, 3]);
+    });
+
+    it('isModel', () => {
+        let code = translator(parse('M1(a, b, c) -> Model'));
+
+        // params
+        assert.equal(eval(`${code}\nvar m1 = new M1(1, 2, 3);m1.instanceModel`), true);
+    });
+
+    it('funName', () => {
+        let code = translator(parse('M1(a, b, c) -> Model'));
+
+        // params
+        assert.equal(eval(`${code}\nvar m1 = new M1(1, 2, 3);m1.className`), 'M1');
     });
 });
