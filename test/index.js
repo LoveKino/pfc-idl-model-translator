@@ -56,4 +56,11 @@ describe('index', () => {
         // params
         assert.equal(eval(`${code}\nvar m1 = M1(1, 2, 3);m1.className`), 'M1');
     });
+
+    it('model contant', () => {
+        let code = translator(parse('M1(a, b, c) -> Model'));
+
+        // params
+        assert.equal(eval(`${code}\nvar m1 = M1(1, 2, 3);MODEL_CLASS_NAME_M1`), 'M1');
+    });
 });
