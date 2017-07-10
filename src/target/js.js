@@ -6,9 +6,12 @@ let {
 } = require('../util');
 
 let modelConstructor = (funName, params) => {
-    return `
-// construcor for ${funName}
+    return `// construcor for ${funName}
 var ${funName} = function(${commaParamsStr(params)}) {
+    return new ${getPrivateClassName(funName)}(${commaParamsStr(params)});
+};
+// private inner class
+var ${getPrivateClassName(funName)} = function(${commaParamsStr(params)}) {
     this._params = [${commaParamsStr(params)}];
 };`;
 };
@@ -22,7 +25,7 @@ let modelGetsCode = (funName, params) => {
 let modelGetCode = (funName, paramName, index) => {
     return `
 // get method for attribute ${paramName}
-${funName}.prototype.get${upperFirstLetter(paramName)} = function() {
+${getProto(funName)}.get${upperFirstLetter(paramName)} = function() {
     return this._params[${index}];
 };`;
 };
@@ -36,7 +39,7 @@ let modelSetsCode = (funName, params) => {
 let modelSetCode = (funName, paramName, index) => {
     return `
 // set method for attribute ${paramName}
-${funName}.prototype.set${upperFirstLetter(paramName)} = function(v) {
+${getProto(funName)}.set${upperFirstLetter(paramName)} = function(v) {
     this._params[${index}] = v;
 };`;
 };
@@ -50,7 +53,7 @@ let modelEqualsCode = (funName, params) => {
 let modelEqualCode = (funName, paramName, index) => {
     return `
 // equal method for attribute ${paramName}
-${funName}.prototype.equal${upperFirstLetter(paramName)} = function(v) {
+${getProto(funName)}.equal${upperFirstLetter(paramName)} = function(v) {
     return this._params[${index}] === v;
 };`;
 };
@@ -58,13 +61,17 @@ ${funName}.prototype.equal${upperFirstLetter(paramName)} = function(v) {
 let modelMetaCode = (funName) => {
     return `
 // some meta methods for model ${funName}
-${funName}.prototype.params = function() {
+${getProto(funName)}.params = function() {
     return this._params;
 };
-${funName}.prototype.instanceModel = true;
-${funName}.prototype.className = '${funName}';
+${getProto(funName)}.instanceModel = true;
+${getProto(funName)}.className = '${funName}';
 `;
 };
+
+let getProto = (funName) => `${getPrivateClassName(funName)}.prototype`;
+
+let getPrivateClassName = (funName) => `_${funName}`;
 
 module.exports = {
     modelConstructor,

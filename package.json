@@ -1,6 +1,6 @@
 {
   "name": "pfc-idl-model-translator",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "model translator based on pfc IDL",
   "main": "index.js",
   "scripts": {
