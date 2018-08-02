@@ -71,7 +71,7 @@ ${getProto(funName)}.className = ${getModelConstantVariableName(funName)};
 };
 
 let getModelConstantVariableName = (funName) => {
-    return `MODEL_CLASS_NAME_${funName.toUpperCase()}`
+    return `MODEL_CLASS_NAME_${funName.toUpperCase()}`;
 };
 
 let getProto = (funName) => `${getPrivateClassName(funName)}.prototype`;
